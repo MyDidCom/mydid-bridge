@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #000;
+    --color-secondary: #111;
+    --color-tertiary: #fff;
+    --color-quaternary: #eee;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url(../assets/fonts/Roboto-Regular.ttf);
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url(../assets/fonts/Roboto-Medium.ttf);
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url(../assets/fonts/Roboto-Bold.ttf);
+    font-weight: 600;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+}
+
+@layer components {
+  body {
+    @apply h-screen;
+    background-repeat: repeat;
+    background-position: center center;
+  }
+  #app {
+    @apply flex flex-col min-h-full;
+    @apply bg-quaternary;
+  }
+
+  .text-xxs {
+    font-size: 0.675rem;
+    line-height: 0.75rem;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
