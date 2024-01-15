@@ -10,6 +10,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "axios": "^1.4.0",
+    "bs58": "^5.0.0",
     "node-polyfill-webpack-plugin": "^2.0.0",
     "qrcode.vue": "^3.4.0",
     "vue": "^3.2.37",

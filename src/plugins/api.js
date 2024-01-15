@@ -12,6 +12,14 @@ const adapter = Axios.create({
   },
 });
 
+const shortenerAdapter = Axios.create({
+  baseURL: process.env.VUE_APP_SHORTENER_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: process.env.VUE_APP_SHORTENER_KEY,
+  },
+});
+
 function eachRecursive(obj) {
   for (var k in obj) {
     if (typeof obj[k] == 'object' && obj[k] !== null) eachRecursive(obj[k]);
@@ -49,8 +57,19 @@ export default {
     );
 
     var api = {
+      getVPRequest(id) {
+        return adapter.get(`/auth/request/${id}`);
+      },
       createSerialNumberVPRequest(body) {
         return adapter.post(`/auth/request/serialnumber`, body);
+      },
+      createAndSendDelayedVPRequest(body) {
+        return adapter.post(`/auth/request/delay`, body);
+      },
+      getDynamicLink(data) {
+        return shortenerAdapter.get(
+          `firebase/data?urlData=${encodeURIComponent(data)}`
+        );
       },
     };
     app.provide('api', api);
