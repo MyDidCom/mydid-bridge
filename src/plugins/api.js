@@ -60,8 +60,11 @@ export default {
       getVPRequest(id) {
         return adapter.get(`/auth/request/${id}`);
       },
-      createSerialNumberVPRequest(body) {
-        return adapter.post(`/auth/request/serialnumber`, body);
+      createSerialNumberSession(body) {
+        return adapter.post(
+          `/auth/sessions/builders/serialnumber/create`,
+          body
+        );
       },
       createAndSendDelayedVPRequest(body) {
         return adapter.post(`/auth/request/delay`, body);

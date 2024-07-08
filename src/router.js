@@ -11,6 +11,18 @@ const router = createRouter({
       component: Home,
     },
     {
+      path: '/b1/:code',
+      component: Home,
+    },
+    {
+      path: '/b2/:code',
+      component: Home,
+    },
+    {
+      path: '/b3/:code',
+      component: Home,
+    },
+    {
       path: '/retrieve/:id',
       component: Retrieve,
     },

@@ -45,61 +45,23 @@ export default {
     const dynamicLink = ref(null);
     const loading = ref(true);
 
-    const delegationBadge = {
-      '@context': [
-        'https://www.w3.org/2018/credentials/v1',
-        'https://purl.imsglobal.org/spec/ob/v3p0/context.json',
-        'https://w3id.org/security/suites/ed25519-2020/v1',
-      ],
-      id: '4a99edd7-5bad-46bf-adb4-4733eb8629ce',
-      type: ['VerifiableCredential', 'EndorsementCredential'],
-      issuer: {
-        id: 'did:mydid:zeb8iho6uuFKmfWxpG5Sawu1F3wvw7tE8RMzMg567hWWT#SERV_1',
-        type: 'Profile',
-        name: 'myDid',
-      },
-      issuanceDate: '2023-07-19T13:02:19Z',
-      expirationDate: '2033-07-19T13:02:19Z',
-      credentialSubject: {
-        id: 'did:mydid:zjX9aQyEJQEGHvHRBmZhzKjKn7FvudHEL4NToRpbuuEYV',
-        type: 'EndorsementSubject',
-        endorsementComment:
-          'DELEGATION::myDid Metaverse::5095f10f60a363c70cf2063a973344cac2b0e805fdc06edc70d85412ab3bc014',
-      },
-      credentialSchema: [
-        {
-          id: 'https://myntfsid.mypinata.cloud/ipfs/QmXRCpd6hqRY8q8EcPAqjM9jDcmbsyWCr2zAo1DVEfi5uJ',
-          type: '1EdTechJsonSchemaValidator2019',
-        },
-      ],
-      mVersion: '3.0',
-      proof: {
-        type: 'EthereumEip712Signature2021',
-        created: '2023-07-19T13:02:22Z',
-        proofPurpose: 'assertionMethod',
-        verificationMethod:
-          'did:mydid:zeb8iho6uuFKmfWxpG5Sawu1F3wvw7tE8RMzMg567hWWT#ASSR_1',
-        proofValue:
-          '0x4ff901910daf1968df963a3a7e9506c1ec2e5e4864b4f303b1d716582fb2e9976f5e78d060aed0646cccc396d3c38db69def05dbb18e92a536b8972ad6e68ec11b',
-        eip712: {
-          messageDataEip712Schema:
-            'https://myntfsid.mypinata.cloud/ipfs/QmUXTFw1u97a4PavnooyHF6Qi4uBLTK2rEherok9DAzrAH',
-          domain: {
-            name: 'myDid',
-            chainId: 56,
-            version: '2',
-          },
-          primaryType: 'EndorsementCredential',
-        },
-      },
-    };
-
-    serialNumber.value = route.query.code;
+    serialNumber.value = route.params.code;
     if (serialNumber.value) {
+      let apiKey;
+      switch (route.path.split('/')[1]) {
+        case 'b1':
+          apiKey = process.env.VUE_APP_BADGE1_API_KEY;
+          break;
+        case 'b2':
+          apiKey = process.env.VUE_APP_BADGE2_API_KEY;
+          break;
+        case 'b3':
+          apiKey = process.env.VUE_APP_BADGE3_API_KEY;
+          break;
+      }
       api
-        .createSerialNumberVPRequest({
-          verifiableCredentials: [],
-          delegationBadge,
+        .createSerialNumberSession({
+          apiKey,
           serialNumber: serialNumber.value,
         })
         .then((res) => {
@@ -109,8 +71,6 @@ export default {
         .catch(() => {
           loading.value = false;
         });
-    } else {
-      loading.value = false;
     }
 
     function isMobile() {
